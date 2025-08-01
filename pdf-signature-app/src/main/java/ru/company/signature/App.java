@@ -46,8 +46,8 @@ public class App
             Map<String, Object[]> signAttributesMap1 = new HashMap<>();
             signAttributesMap1.put(alias, new Object[]{cert, privateKey});
 
-            String inputPdfPath = "C:/Dev/test.pdf";
-            String outputPdfPath = "C:/Dev/test/test_out.pdf";
+            String inputPdfPath = "<путь до директории с PDF-ками, которые нужно подписать>";
+            String outputPdfPath = "<Путь до директории с подписаными PDF-ками>";
 
             byte[] pdfData = Files.readAllBytes(Paths.get(inputPdfPath));
             Rectangle signatureRectangle = new Rectangle(100, 100, 300, 200);
