@@ -22,8 +22,8 @@ import java.util.Map.Entry;
 
 
 public class SignatureProcessor {
-    private static final String FILE_PATH = "C:/Dev/7680x4320-white-solid-color-background.jpg";  // Замените на актуальный путь
-    private static final String INNER_CA = "ab89250d-d856-43ec-80a2-3d2c5b293136"; // Замените на актуальный alias
+    private static final String FILE_PATH = "<тут будет путь до вашей картинка,которую хоитите использовать как фон штампика>";
+    private static final String INNER_CA = "< используется для построения цепочки сертификатов. Замените на актуальный alias>";
 
     /**
      * Подписывает PDF документ с использованием нескольких ЭЦП.
@@ -63,13 +63,14 @@ public class SignatureProcessor {
             for (Entry<X509Certificate, PrivateKey> entry : currSignAttrMap.entrySet()) {
 
                 try {
-                    reader = new PdfReader(signedPdfData);  // Initialize inside the loop
+                    reader = new PdfReader(signedPdfData);
                     stp = PdfStamper.createSignature(reader, bais, pdfVersion);
                     PdfSignatureAppearance sap = stp.getSignatureAppearance();
+                    // Сделано для примера каким образом можно заполнять поля
                     sap.setReason("Подписание ГОСТ-сертификатом");
                     sap.setLocation("Москва");
                     sap.setContact("email@example.ru");
-                    sap.setProvider("JCP");
+                    sap.setProvider("<ваш провайдер>"); // Это не обязательно, т.к. (надеюсь) вы правильно выполнили установку всего
                     PrivateKey pk = entry.getValue();
                     Certificate[] certChain = new Certificate[]{entry.getKey(), innerCA};
                     
@@ -80,10 +81,9 @@ public class SignatureProcessor {
                     sap.setImage(image);
                     sap.setVisibleSignature(signatureRectangle, signaturePageNumber, "");
 
-                    signedPdfData = bais.toByteArray();  // Обновляем signedPdfData
-                    bais.reset();  // Сброс ByteArrayOutputStream
+                    signedPdfData = bais.toByteArray();
+                    bais.reset();
                 } catch (Exception e) {
-                    // Обработка исключения
                     System.err.println("Ошибка при чтении файла: " + e.getMessage());
                 } finally {
                     if (stp != null) {
@@ -102,7 +102,7 @@ public class SignatureProcessor {
                     }
                 }
             }
-            return signedPdfData;  // Возвращаем конечный подписанный PDF
+            return signedPdfData;
         } catch (Exception ex) {
             System.err.println("Error closing ByteArrayOutputStream: " + ex.getMessage());
         } finally {
