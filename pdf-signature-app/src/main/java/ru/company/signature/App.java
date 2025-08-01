@@ -20,11 +20,10 @@ public class App
     public static void main( String[] args )
     {
         try {
-            System.out.println("Classpath: " + System.getProperty("java.class.path"));
-            System.out.println(System.getProperty("java.version"));
-            TreeSet<String> algorithms = new TreeSet<String>();
-
             // Блок для просмотра доступных алгоритмов и провайдеров
+            //System.out.println("Classpath: " + System.getProperty("java.class.path"));
+            //System.out.println(System.getProperty("java.version"));
+            //TreeSet<String> algorithms = new TreeSet<String>();
             //for (Provider provider : Security.getProviders())
             //    System.out.println(provider);
             //    for (Provider.Service service : provider.getServices())
@@ -33,11 +32,11 @@ public class App
             //for (String algorithm : algorithms)
             //    System.out.println(algorithm);
 
-            String keyStorePassword = "Uffhfuffhf1";
-            String keyStorePath = "C:/Dev/test.pfx";
-            String alias = "ab89250d-d856-43ec-80a2-3d2c5b293136";
-            KeyStore keyStore = KeyStore.getInstance("PKCS12");
-            String keyPassword = "Uffhfuffhf1";
+            String keyStorePassword = "<пароль от хранилища ключей>";
+            String keyStorePath = "<путь до хранилища ключей>";
+            String alias = "<алиас нужно подставить свой>";
+            KeyStore keyStore = KeyStore.getInstance("<зависит от используемого провадера, можно посмотреть в расширении хранилища>");
+            String keyPassword = "<пароль от ключа>";
             try (FileInputStream fis = new FileInputStream(keyStorePath)) {
                 keyStore.load(fis, keyStorePassword.toCharArray());
             }
@@ -52,7 +51,7 @@ public class App
 
             byte[] pdfData = Files.readAllBytes(Paths.get(inputPdfPath));
             Rectangle signatureRectangle = new Rectangle(100, 100, 300, 200);
-            String[] aliases = {"ab89250d-d856-43ec-80a2-3d2c5b293136"};
+            String[] aliases = {"<alias1>", "<alias2>"};
             byte[] signedPdfData = SignatureProcessor.samplePDFSignature(
                 aliases,
                 pdfData,
