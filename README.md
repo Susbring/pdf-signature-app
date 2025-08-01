@@ -88,6 +88,22 @@ at java.lang.ClassLoader.loadClass(Unknown Source)
 
 Как итог, после выполнения всех этих действий itext начинает собирасться, конфликтов нет, КриптоПро и itext ссылаются на одну версию org.bouncycastle 1.50.
 
-Еще нужно сказать, что при использовании Java 6, 7, 8 jcp нужно прям устанавливать, но если используете 9+ установка не требуется. 
+Еще нужно сказать, что при использовании Java 6, 7, 8 jcp нужно прям устанавливать, но если используете 9+ установка не требуется.
+
+Если не очень хочется лезть в policy и security файлы после настройки проекта, но почему-то что-то не работает в коде присутствует закомментированный блок:
+
+```java
+for (Provider provider : Security.getProviders())
+  System.out.println(provider);
+  for (Provider.Service service : provider.getServices())
+    if (service.getType().equals("Signature"))
+      algorithms.add(service.getAlgorithm());
+for (String algorithm : algorithms)
+  System.out.println(algorithm);
+```
+
+Он выведет что-то типа такого (если смотреть только провайдеры):
+
+<img width="179" height="195" alt="image" src="https://github.com/user-attachments/assets/f8135031-8374-4005-927a-f88932ad4dca" />
 
 **На последок хочу предостеречь от использования vscode, лучше используйте IntelliJ IDEA**
